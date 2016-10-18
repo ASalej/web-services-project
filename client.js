@@ -2,6 +2,7 @@
 
 var soap = require('soap');
 var url = 'http://localhost:8001/wsdl?wsdl';
+
 var addPlanetArgs = {
     planet: {
         name: "Neptun",
@@ -23,11 +24,19 @@ var delPlanetArgs = {
     planet_name: "Earth"
 };
 
-soap.createClient(url,function(err, client) {
+var addPersonArgs = {
+    person: {
+        name: "Alena",
+        surname: "Pazniak"
+    }
+};
+
+soap.createClient(url, function(err, client) {
     client.addPlanet(addPlanetArgs, function(err, result) {
         console.log(JSON.stringify(result, null, '  '));
         if (err) console.log(err);
     });
+
     client.getPlanet(getPlanetArgs, function(err, result) {
         console.log(JSON.stringify(result, null, '  '));
         if (err) console.log(err);
@@ -40,4 +49,11 @@ soap.createClient(url,function(err, client) {
         console.log(JSON.stringify(result, null, '  '));
         if (err) console.log(err);
     });
+
+/*
+    client.addPerson(addPersonArgs, function(err, result) {
+        console.log(JSON.stringify(result, null, '  '));
+        if (err) console.log(err);
+    })
+*/
 });

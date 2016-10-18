@@ -33,10 +33,10 @@ class Status {
 
 class Planet {
     constructor(id, planet) {
-        this.id = id || undefined;
-        this.name = planet.name || undefined;
-        this.radius = planet.radius || undefined;
-        this.opener_id = planet.opener_id || undefined;
+        this.id = id;
+        this.name = planet.name;
+        this.radius = planet.radius;
+        this.opener_id = planet.opener_id;
     }
 
     getObj() {
@@ -55,12 +55,28 @@ class Planet {
     }
 };
 
+class Person {
+    constructor(id, person) {
+        this.id = id;
+        this.name = person.name;
+        this.surname = person.surname;
+    }
+
+    getObj() {
+        return {
+            opener_id: this.id,
+            name: this.name,
+            surname: this.surname
+        }
+    }
+};
+
 var PlanetDB = JSON.parse(fs.readFileSync('planets.json', 'utf8'));
 var OpenerDB = JSON.parse(fs.readFileSync('openers.json', 'utf8'));
 
-function printPlanetDB() {
+function printDB(db) {
     console.log('\n====================\n');
-    console.log('PlanetDB:\n' + JSON.stringify(PlanetDB, null, '  '));
+    console.log('db:\n' + JSON.stringify(db, null, '  '));
     console.log('\n====================\n');
 }
 
@@ -69,7 +85,7 @@ var log = function(callerName, msg) {
 };
 
 var ps = {
-    PlanetSystemService: {
+    PlanetService: {
         PlanetPort: {
             addPlanet: function(args, callback) {
                 var sts = new Status();
@@ -89,7 +105,7 @@ var ps = {
                     sts.message = "Some field are incorect";
                 }
 
-                printPlanetDB();
+                printDB(PlanetDB);
 
                 callback({
                     status: sts.getObj()
@@ -151,7 +167,7 @@ var ps = {
                     sts.message = "Some field are incorect";
                 }
 
-                printPlanetDB();
+                printDB(PlanetDB);
 
                 callback({
                     planet: p,
@@ -179,17 +195,60 @@ var ps = {
                     sts.message = "Some field are incorect";
                 }
 
-                printPlanetDB();
+                printDB(PlanetDB);
 
                 callback({
                     status: sts.getObj()
                 });
             }
+        },
+        PersonPort: {
+            addPerson: function (args, callback) {
+                var sts = new Status();
+
+                log("addPerson", JSON.stringify(args, null, '  '));
+
+                if (args.person.name && args.person.surname) {
+                    var person = new Person(OpenerDB.length + 1, args.person);
+                    OpenerDB.push(person.getObj());
+                    sts.status = true;
+                    sts.id = hash(args.person.name + args.person.surname);
+                }
+
+                callback({
+                    status: sts.getObj()
+                });
+            },
+            getPerson: function(args, callback) {
+                var sts = new Status();
+
+                log("getPerson", JSON.stringify(args, null, '  '));
+
+                if (args.name && args.surname) {
+                    var persons = OpenerDB.filter(function(e, i, arr) {
+                        return e.name === args.name && e.name === args.surname;
+                    });
+                    if (persons.length) {
+                        sts.status = true;
+                    } else {
+                        sts.status = false;
+                        sts.message = "Can not find " + args.name + " " + args.surname + " person";
+                    }
+                } else {
+                    sts.status = false;
+                    sts.message = "incorect name";
+                }
+
+                callback({
+                    persons: persons,
+                    status: sts.getObj()
+                });
+            },
         }
     }
 };
 
-var xml = require('fs').readFileSync('ps.wsdl', 'utf8');
+var xml = require('fs').readFileSync('planet.wsdl', 'utf8');
 
 var app = express();
 app.listen(8001, function() {
