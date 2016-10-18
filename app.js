@@ -84,7 +84,7 @@ var log = function(callerName, msg) {
     console.log('\n' + callerName + ' >>\n' + msg);
 };
 
-var ps = {
+var planet_service = {
     PlanetService: {
         PlanetPort: {
             addPlanet: function(args, callback) {
@@ -201,7 +201,12 @@ var ps = {
                     status: sts.getObj()
                 });
             }
-        },
+        }
+    }
+};
+
+var person_service = {
+    PersonService: {
         PersonPort: {
             addPerson: function (args, callback) {
                 var sts = new Status();
@@ -248,10 +253,25 @@ var ps = {
     }
 };
 
-var xml = require('fs').readFileSync('planet.wsdl', 'utf8');
+var planet_xml = require('fs').readFileSync('planet.wsdl', 'utf8');
+var person_xml = require('fs').readFileSync('person.wsdl', 'utf8');
 
 var app = express();
+
+app.use(express.static('wsdl'))
+
 app.listen(8001, function() {
     console.log('SOAP server has been started!');
-    soap.listen(app, '/wsdl', ps, xml);
+    soap.listen(app, '/planet', planet_service, planet_xml);
+    soap.listen(app, '/person', person_service, person_xml);
 });
+
+/*
+var server = http.createServer(function(request, response) {
+    response.end("404: Not Found: " + request.url);
+});
+
+server.listen(8001);
+soap.listen(server, '/planet', planet_service, planet_xml);
+soap.listen(server, '/person', person_service, person_xml);
+*/

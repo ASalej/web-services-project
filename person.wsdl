@@ -3,18 +3,18 @@
              xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
-             xmlns:tns="http://localhost/wsdl?wsdl"
+             xmlns:tns="http://localhost:8001/person"
              xmlns:xs="http://www.w3.org/2001/XMLSchema"
              xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
              xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
-             name="PlanetSystemWSDL"
+             name="PersonSystemWSDL"
              xmlns="http://schemas.xmlsoap.org/wsdl/">
   <types>
     <xs:schema xmlns:tns="http://schemas.xmlsoap.org/wsdl/"
                xmlns="http://www.w3.org/2001/XMLSchema"
                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                elementFormDefault="qualified"
-               targetNamespace="http://localhost/wsdl?wsdl">
+               targetNamespace="http://localhost:8001/person">
       <!-- General types -->
       <complexType name="Response">
         <sequence>
@@ -23,48 +23,6 @@
           <element minOccurs="0" maxOccurs="1" name="id" type="decimal"/>
         </sequence>
       </complexType>
-
-      <!-- Planet type -->
-      <complexType name="Planet">
-        <sequence>
-          <element name="p_id" type="integer" minOccurs="1" maxOccurs="1" />
-          <element name="name" type="string" minOccurs="1" maxOccurs="1" />
-          <element name="radius" type="float" minOccurs="1" maxOccurs="1" />
-          <element name="opener_id" type="decimal" minOccurs="1" maxOccurs="1" />
-        </sequence>
-      </complexType>
-      <complexType name="PlanetList">
-        <sequence>
-          <element minOccurs="1" maxOccurs="unbounded" name="planets" type="Planet" />
-        </sequence>
-      </complexType>
-      <!-- Planet methods input and output -->
-      <element name="AddPlanetIn">
-        <element name="planet" type="Planet" minOccurs="1"/>
-      </element>
-      <element name="AddPlanetOut">
-        <element name="status" type="Response" minOccurs="1"/>
-      </element>
-      <element name="GetPlanetIn">
-        <element name="planet_name" type="string" minOccurs="1"/>
-      </element>
-      <element name="GetPlanetOut">
-        <element name="planet" type="Planet" minOccurs="0" maxOccurs="1"/>
-        <element name="status" type="Response" minOccurs="1"/>
-      </element>
-      <element name="ChangePlanetIn">
-        <element name="planet" type="Planet" minOccurs="1"/>
-      </element>
-      <element name="ChangePlanetOut">
-        <element name="planet" type="Planet" minOccurs="0" maxOccurs="1"/>
-        <element name="status" type="Response" minOccurs="1"/>
-      </element>
-      <element name="DelPlanetIn">
-        <element name="planet_name" type="string" minOccurs="1"/>
-      </element>
-      <element name="DelPlanetOut">
-        <element name="status" type="Response" minOccurs="1"/>
-      </element>
 
       <!-- Person type -->
       <complexType name="Person">
@@ -111,38 +69,6 @@
     </xs:schema>
   </types>
 
-  <!-- Сообщения процедуры addPlanet -->
-  <message name="addPlanetRequest">
-    <part name="Request" element="tns:AddPlanetIn" />
-  </message>
-  <message name="addPlanetResponse">
-    <part name="Response" element="tns:AddPlanetOut" />
-  </message>
-
-  <!-- Сообщения процедуры getPlanet -->
-  <message name="getPlanetRequest">
-    <part name="Request" element="tns:GetPlanetIn" />
-  </message>
-  <message name="getPlanetResponse">
-    <part name="Response" element="tns:GetPlanetOut" />
-  </message>
-
-  <!-- Сообщения процедуры changePlanet -->
-  <message name="changePlanetRequest">
-    <part name="Request" element="tns:ChangePlanetIn" />
-  </message>
-  <message name="changePlanetResponse">
-    <part name="Response" element="tns:ChangePlanetOut" />
-  </message>
-
-  <!-- Сообщения процедуры delPlanet -->
-  <message name="delPlanetRequest">
-    <part name="Request" element="tns:DelPlanetIn" />
-  </message>
-  <message name="delPlanetResponse">
-    <part name="Response" element="tns:DelPlanetOut" />
-  </message>
-
   <!-- Сообщения процедуры addPerson -->
   <message name="addPersonRequest">
     <part name="Request" element="tns:AddPersonIn" />
@@ -177,25 +103,6 @@
 
 
   <!-- Привязка процедуры к сообщениям -->
-  <portType name="PlanetPortType">
-    <operation name="addPlanet">
-      <input message="tns:addPlanetRequest" />
-      <output message="tns:addPlanetResponse" />
-    </operation>
-    <operation name="getPlanet">
-      <input message="tns:getPlanetRequest" />
-      <output message="tns:getPlanetResponse" />
-    </operation>
-    <operation name="changePlanet">
-      <input message="tns:changePlanetRequest" />
-      <output message="tns:changePlanetResponse" />
-    </operation>
-    <operation name="delPlanet">
-      <input message="tns:delPlanetRequest" />
-      <output message="tns:delPlanetResponse" />
-    </operation>
-  </portType>
-
   <portType name="PersonPortType">
     <operation name="addPerson">
       <input message="tns:addPersonRequest" />
@@ -217,45 +124,6 @@
 
 
   <!-- Формат процедур веб-сервиса -->
-  <binding name="PlanetBinding" type="tns:PlanetPortType">
-    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="addPlanet">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="getPlanet">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="changePlanet">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="delPlanet">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-  </binding>
   <binding name="PersonBinding" type="tns:PersonPortType">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
     <operation name="addPerson">
@@ -298,12 +166,9 @@
 
 
   <!-- Определение сервиса -->
-  <service name="PlanetService">
-    <port name="PlanetPort" binding="tns:PlanetBinding">
-      <soap:address location="http://localhost:8001/wsdl" />
-    </port>
+  <service name="PersonService">
     <port name="PersonPort" binding="tns:PersonBinding">
-      <soap:address location="http://localhost:8001/wsdl" />
+      <soap:address location="http://localhost:8001/person" />
     </port>
   </service>
 </definitions>

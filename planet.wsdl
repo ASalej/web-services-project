@@ -3,7 +3,7 @@
              xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
-             xmlns:tns="http://localhost/wsdl?wsdl"
+             xmlns:tns="http://localhost:8001/planet"
              xmlns:xs="http://www.w3.org/2001/XMLSchema"
              xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
              xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
@@ -14,7 +14,7 @@
                xmlns="http://www.w3.org/2001/XMLSchema"
                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                elementFormDefault="qualified"
-               targetNamespace="http://localhost/wsdl?wsdl">
+               targetNamespace="http://localhost:8001/planet">
       <!-- General types -->
       <complexType name="Response">
         <sequence>
@@ -167,7 +167,7 @@
   <!-- Определение сервиса -->
   <service name="PlanetService">
     <port name="PlanetPort" binding="tns:PlanetBinding">
-      <soap:address location="http://localhost:8001/wsdl" />
+      <soap:address location="http://localhost:8001/planet" />
     </port>
   </service>
 </definitions>
