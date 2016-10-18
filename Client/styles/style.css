@@ -41,3 +41,20 @@ a {
     background-color: #f6d268;
     border: 2px solid #ffd455;
 }
+
+.alert {
+    margin-top: 5px;
+    border-radius: 0;
+}
+
+.alert-danger {
+    color: #ffffff;
+    background-color: #f75050;
+    border-color: #f9617a;
+}
+
+.alert-success {
+    color: #ffffff;
+    background-color: #65e475;
+    border-color: #45ff6a;
+}
