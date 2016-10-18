@@ -24,20 +24,6 @@
         </sequence>
       </complexType>
 
-      <!-- OpenerPerson type -->
-      <complexType name="OpenerPerson">
-        <sequence>
-          <element name="opener_id" type="decimal" minOccurs="1" maxOccurs="1" />
-          <element name="name" type="string" minOccurs="1" maxOccurs="1" />
-          <element name="surname" type="string" minOccurs="1" maxOccurs="1" />
-        </sequence>
-      </complexType>
-      <complexType name="OpenerPersonList">
-        <sequence>
-          <element minOccurs="1" maxOccurs="unbounded" name="planets" type="Planet"/>
-        </sequence>
-      </complexType>
-
       <!-- Planet type -->
       <complexType name="Planet">
         <sequence>
@@ -179,7 +165,7 @@
 
 
   <!-- Определение сервиса -->
-  <service name="PlanetSystemService">
+  <service name="PlanetService">
     <port name="PlanetPort" binding="tns:PlanetBinding">
       <soap:address location="http://localhost:8001/wsdl" />
     </port>
