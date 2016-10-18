@@ -1,7 +1,8 @@
 'use strict'
 
 $(document).ready(function () {
-    var url = 'http://localhost:8000/wsdl?wsdl';
+    var planetUrl = 'http://localhost:8001/planet?wsdl';
+    var personUrl = 'http://localhost:8001/person?wsdl';
 
     var addPlanet = $('#addPlanet');
     var addPerson = $('#addPerson');
@@ -13,10 +14,11 @@ $(document).ready(function () {
     var changePerson = $('#changePerson');
     var getPlanetList = $('#getPlanetList');
 
-    function soap (args, button) {
+    function soap (args, button, url) {
+        var temp = { button: ''};
         $.soap({
             url: url,
-            method: 'changePlanet',
+            method: temp.keys().toString(),
             data: args,
             success: function (soapResponse) {
                 console.log(soapResponse.toXML());
@@ -42,7 +44,7 @@ $(document).ready(function () {
                 opener_id: opener
             }
         };
-        soap(args, addPlanet);
+        soap(args, addPlanet, planetUrl);
     });
 
     addPerson.on('click', function () {
@@ -54,7 +56,7 @@ $(document).ready(function () {
                 surname: personSurmane
             }
         };
-        soap(args, addPerson);
+        soap(args, addPerson, personUrl);
     });
 
     getPlanet.on('click', function () {
@@ -62,7 +64,7 @@ $(document).ready(function () {
         var args = {
             planet_name: planet
         };
-        soap(args, getPlanet);
+        soap(args, getPlanet, planetUrl);
     });
 
     getPerson.on('click', function() {
@@ -74,7 +76,7 @@ $(document).ready(function () {
                 surname: surname
             }
         }
-        soap(args, getPerson);
+        soap(args, getPerson, personUrl);
     })
 
     changePlanet.on('click', function () {
@@ -88,7 +90,7 @@ $(document).ready(function () {
                 opener_id: changePlanetOpener
             }
         };
-        soap(args, changePlanet);
+        soap(args, changePlanet, planetUrl);
     });
 
     changePerson.on('click', function () {
@@ -100,13 +102,13 @@ $(document).ready(function () {
                 surname: personSurmane
             }
         };
-        soap(args, changePerson);
+        soap(args, changePerson, personUrl);
     });
 
     removePlanet.on('click', function () {
         var removePlanetName = $('#removePlanetName').val();
         var args = { planet_name: removePlanetName };
-        soap(args, removePlanet);
+        soap(args, removePlanet, planetUrl);
     });
 
     removePerson.on('click', function () {
@@ -116,10 +118,10 @@ $(document).ready(function () {
             name: removePersonName,
             surname: removePersonSurnameName
         };
-        soap(args, removePerson);
+        soap(args, removePerson, personUrl);
     });
 
     getPlanetList.on('click', function () {
-        soap({}, getPlanetList);
+        soap({}, getPlanetList, planetUrl);
     })
 })
