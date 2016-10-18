@@ -22,10 +22,10 @@ class Status {
 
 class Planet {
     constructor(id, planet) {
-        this.id = id || undefined;
-        this.name = planet.name || undefined;
-        this.radius = planet.radius || undefined;
-        this.opener_id = planet.opener_id || undefined;
+        this.id = id;
+        this.name = planet.name;
+        this.radius = planet.radius;
+        this.opener_id = planet.opener_id;
     }
 
     getObj() {
@@ -38,12 +38,28 @@ class Planet {
     }
 };
 
+class Person {
+    constructor(id, person) {
+        this.id = id;
+        this.name = person.name;
+        this.surname = person.surname;
+    }
+
+    getObj() {
+        return {
+            opener_id: this.id,
+            name: this.name,
+            surname: this.surname
+        }
+    }
+};
+
 var PlanetDB = JSON.parse(fs.readFileSync('planets.json', 'utf8'));
 var OpenerDB = JSON.parse(fs.readFileSync('openers.json', 'utf8'));
 
-function printPlanetDB() {
+function printDB(db) {
     console.log('\n====================\n');
-    console.log('PlanetDB:\n' + JSON.stringify(PlanetDB, null, '  '));
+    console.log('db:\n' + JSON.stringify(db, null, '  '));
     console.log('\n====================\n');
 }
 
@@ -71,7 +87,7 @@ var ps = {
                     sts.message = "Some field are incorect";
                 }
 
-                printPlanetDB();
+                printPlanetDB(PlanetDB);
 
                 callback({
                     status: sts.getObj()
@@ -105,7 +121,53 @@ var ps = {
                     planet: planet,
                     status: sts.getObj()
                 });
-            }
+            },
+            addPerson: function (args, callback) {
+                var sts = new Status();
+
+                log("addPerson", JSON.stringify(args, null, '  '));
+
+                if (args.person.name && args.person.surname) {
+                    var person = new Person(OpenerDB.length + 1, args.person);
+                    OpenerDB.push(person.getObj());
+                    sts.status = true;
+                    sts.id = OpenerDB.length;
+                } else {
+                    sts.status = false;
+                    sts.message = "Some field are incorect";
+                }
+
+                callback({
+                    status: sts.getObj()
+                });
+            },
+            getPerson: function(args, callback) {
+                var sts = new Status();
+
+                log("getPerson", JSON.stringify(args, null, '  '));
+
+                if (args.name) {
+                    var person = OpenerDB.find(function(e, i, arr) {
+                        return e.name === args.planet_name) {
+                    });
+                    if (person) {
+                        sts.status = true;
+                        sts.id = person.opener_id;
+                    } else {
+                        sts.status = false;
+                        sts.message = "Can not find " + args.name + " planet";
+                    }
+                } else {
+                    sts.status = false;
+                    sts.message = "incorect name";
+                }
+
+                callback({
+                    person: person,
+                    status: sts.getObj()
+                });
+            },
+
         }
     }
 };
