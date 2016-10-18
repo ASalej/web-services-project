@@ -57,9 +57,38 @@ var addPersonArgs = {
         surname: "Pazniak"
     }
 };
+var getPersonArgs = {
+    name: "Alena",
+    surname: "Pazniak"
+};
+var changePersonArgs = {
+    person: {
+        name: "Alena",
+        surname: "Pazniak"
+    }
+};
+var delPersonArgs = {
+    name: "Alena",
+    surname: "Pazniak"
+};
 
 soap.createClient(url, function(err, client) {
     client.addPerson(addPersonArgs, function(err, result) {
+        console.log('============= Person Service ==============');
+        console.log(JSON.stringify(result, null, '  '));
+        if (err) console.log(err);
+    });
+    client.getPerson(getPersonArgs, function(err, result) {
+        console.log('============= Person Service ==============');
+        console.log(JSON.stringify(result, null, '  '));
+        if (err) console.log(err);
+    });
+    client.changePerson(changePersonArgs, function(err, result) {
+        console.log('============= Person Service ==============');
+        console.log(JSON.stringify(result, null, '  '));
+        if (err) console.log(err);
+    });
+    client.delPerson(delPersonArgs, function(err, result) {
         console.log('============= Person Service ==============');
         console.log(JSON.stringify(result, null, '  '));
         if (err) console.log(err);

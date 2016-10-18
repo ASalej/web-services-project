@@ -118,10 +118,7 @@ var planet_service = {
 
                 if (args.planet_name) {
                     var planet = PlanetDB.find(function(e, i, arr) {
-                        if (e.name === args.planet_name) {
-                            return true;
-                        }
-                        return false;
+                        return e.name === args.planet_name;
                     })
                     if (planet) {
                         sts.status = true;
@@ -214,11 +211,13 @@ var person_service = {
                 log("addPerson", JSON.stringify(args, null, '  '));
 
                 if (args.person.name && args.person.surname) {
-                    var person = new Person(OpenerDB.length + 1, args.person);
+                    var person = new Person(hash(args.person.name + args.person.surname), args.person);
                     OpenerDB.push(person.getObj());
                     sts.status = true;
-                    sts.id = hash(args.person.name + args.person.surname);
+                    sts.id = true;
                 }
+
+                printDB(OpenerDB);
 
                 callback({
                     status: sts.getObj()
@@ -231,7 +230,7 @@ var person_service = {
 
                 if (args.name && args.surname) {
                     var persons = OpenerDB.filter(function(e, i, arr) {
-                        return e.name === args.name && e.name === args.surname;
+                        return e.name === args.name && e.surname === args.surname;
                     });
                     if (persons.length) {
                         sts.status = true;
@@ -246,6 +245,58 @@ var person_service = {
 
                 callback({
                     persons: persons,
+                    status: sts.getObj()
+                });
+            },
+            changePerson: function(args, callback) {
+                var sts = new Status(true, "Change person does nothing");
+
+                log("changePerson", JSON.stringify(args, null, '  '));
+
+                if (args.person.name && args.person.surname) {
+                    var p = OpenerDB.filter(function(e, i, arr) {
+                        return e.name === args.person.name && e.surname === args.person.surname;
+                    });
+                    if (p.length) {
+                        sts.status = true;
+                    } else {
+                        sts.status = false;
+                        sts.message = "Can not find " + args.name + " " + args.surname + " person";
+                    }
+                } else {
+                    sts.status = false;
+                    sts.message = "incorect name";
+                }
+
+                callback({
+                    persons: p,
+                    status: sts.getObj()
+                });
+            },
+            delPerson: function(args, callback) {
+                var sts = new Status(true);
+
+                log("delPerson", JSON.stringify(args, null, '  '));
+
+                if (args.name && args.surname) {
+                    var len = OpenerDB.length;
+                    OpenerDB = OpenerDB.filter(function(e, i, arr) {
+                        return e.name != args.name && e.surname != args.surname;
+                    });
+                    if (len != OpenerDB.length) {
+                        sts.status = true;
+                    } else {
+                        sts.status = false;
+                        sts.message = "Can not find " + args.name + " " + args.surname + " person";
+                    }
+                } else {
+                    sts.status = false;
+                    sts.message = "incorect name";
+                }
+
+                printDB(OpenerDB);
+
+                callback({
                     status: sts.getObj()
                 });
             },

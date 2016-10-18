@@ -49,14 +49,14 @@
         <element name="surname" type="string" minOccurs="1"/>
       </element>
       <element name="GetPersonOut">
-        <element name="person" type="Person" minOccurs="0" maxOccurs="1"/>
+        <element name="persons" type="PersonList" minOccurs="0" maxOccurs="1"/>
         <element name="status" type="Response" minOccurs="1"/>
       </element>
       <element name="ChangePersonIn">
         <element name="person" type="Person" minOccurs="1"/>
       </element>
       <element name="ChangePersonOut">
-        <element name="person" type="Person" minOccurs="0" maxOccurs="1"/>
+        <element name="person" type="PersonList" minOccurs="0" maxOccurs="1"/>
         <element name="status" type="Response" minOccurs="1"/>
       </element>
       <element name="DelPersonIn">

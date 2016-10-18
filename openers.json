@@ -3,5 +3,15 @@
         "opener_id": 1,
         "name": "Galileo",
         "surname": "Galilei"
+    },
+    {
+        "opener_id": 144,
+        "name": "Alena",
+        "surname": "Pazniak"
+    },
+    {
+        "opener_id": 123,
+        "name": "Alena",
+        "surname": "Pazniak"
     }
 ]
