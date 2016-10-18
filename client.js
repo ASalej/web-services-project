@@ -4,9 +4,9 @@ var soap = require('soap');
 var url = 'http://localhost:8001/wsdl?wsdl';
 var addPlanetArgs = {
     planet: {
-        name: "Earth",
+        name: "Neptun",
         radius: 40000,
-        opener_id: null
+        opener_id: 2
     }
 };
 var getPlanetArgs = {

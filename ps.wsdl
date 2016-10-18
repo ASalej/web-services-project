@@ -54,16 +54,17 @@
       </complexType>
       <!-- Planet methods input and output -->
       <element name="AddPlanetIn">
-        <element name="planet" type="Planet" />
+        <element name="planet" type="Planet" minOccurs="1"/>
       </element>
       <element name="AddPlanetOut">
-        <element name="status" type="Response" />
+        <element name="status" type="Response" minOccurs="1"/>
       </element>
       <element name="GetPlanetIn">
-        <element name="planet_name" type="string" />
+        <element name="planet_name" type="string" minOccurs="1"/>
       </element>
       <element name="GetPlanetOut">
-        <element name="status" type="Response" />
+        <element name="planet" type="Planet" minOccurs="0" maxOccurs="1"/>
+        <element name="status" type="Response" minOccurs="1"/>
       </element>
     </xs:schema>
   </types>
