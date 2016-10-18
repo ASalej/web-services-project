@@ -12,14 +12,32 @@ var addPlanetArgs = {
 var getPlanetArgs = {
     planet_name: "Earth"
 };
+var changePlanetArgs = {
+    planet: {
+        name: "Earth",
+        radius: 123321,
+        opener_id: 42
+    }
+};
+var delPlanetArgs = {
+    planet_name: "Earth"
+};
 
 soap.createClient(url,function(err, client) {
     client.addPlanet(addPlanetArgs, function(err, result) {
-        console.log(result);
+        console.log(JSON.stringify(result, null, '  '));
         if (err) console.log(err);
     });
     client.getPlanet(getPlanetArgs, function(err, result) {
-        console.log(result);
+        console.log(JSON.stringify(result, null, '  '));
+        if (err) console.log(err);
+    });
+    client.changePlanet(changePlanetArgs, function(err, result) {
+        console.log(JSON.stringify(result, null, '  '));
+        if (err) console.log(err);
+    });
+    client.delPlanet(delPlanetArgs, function(err, result) {
+        console.log(JSON.stringify(result, null, '  '));
         if (err) console.log(err);
     });
 });
