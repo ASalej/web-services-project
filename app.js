@@ -1,5 +1,16 @@
 'use strict';
 
+function hash(string) {
+    var hash = 0;
+    if (string.length == 0) return hash;
+    for (var i = 0; i < string.length; i++) {
+        var char = string.charCodeAt(i);
+        hash = ((hash<<5)-hash)+char;
+        hash = hash & 0x7fffffff; // Convert to 32bit integer
+    }
+    return hash;
+}
+
 var express = require('express');
 var soap = require('soap');
 var fs = require('fs');
@@ -36,6 +47,12 @@ class Planet {
             opener_id: this.opener_id
         }
     }
+
+    change(planet) {
+        this.name = planet.name;
+        this.radius = planet.radius;
+        this.opener_id = planet.opener_id;
+    }
 };
 
 var PlanetDB = JSON.parse(fs.readFileSync('planets.json', 'utf8'));
@@ -62,10 +79,11 @@ var ps = {
                 if (args.planet.name &&
                     args.planet.radius &&
                     args.planet.opener_id) {
-                    var planet = new Planet(PlanetDB.length + 1, args.planet);
+
+                    var planet = new Planet(hash(args.planet.name), args.planet);
                     PlanetDB.push(planet.getObj());
                     sts.status = true;
-                    sts.id = PlanetDB.length;
+                    sts.id = planet.id;
                 } else {
                     sts.status = false;
                     sts.message = "Some field are incorect";
@@ -103,6 +121,67 @@ var ps = {
 
                 callback({
                     planet: planet,
+                    status: sts.getObj()
+                });
+            },
+            changePlanet: function(args, callback) {
+                var sts = new Status();
+
+                log("changePlanet", JSON.stringify(args, null, '  '));
+
+                if (args.planet.name &&
+                    args.planet.radius &&
+                    args.planet.opener_id) {
+
+                    var p_index = PlanetDB.findIndex(function(e, i, arr) {
+                        return (e) ? e.name === args.planet.name : false;
+                    });
+                    if (p_index != -1) {
+                        var p = new Planet(0, PlanetDB[p_index]);
+                        p.change(args.planet);
+                        PlanetDB[p_index] = p.getObj();
+                        sts.status = true;
+                        sts.id = p.id;
+                    } else {
+                        sts.status = false;
+                        sts.message = "Can not find " + args.planet.name + " planet";
+                    }
+                } else {
+                    sts.status = false;
+                    sts.message = "Some field are incorect";
+                }
+
+                printPlanetDB();
+
+                callback({
+                    planet: p,
+                    status: sts.getObj()
+                });
+            },
+            delPlanet: function(args, callback) {
+                var sts = new Status();
+
+                log("delPlanet", JSON.stringify(args, null, '  '));
+
+                if (args.planet_name) {
+                    var len = PlanetDB.length;
+                    PlanetDB = PlanetDB.filter(function(e, i, arr) {
+                        return e.name != args.planet_name;
+                    });
+                    if (len == PlanetDB) {
+                        sts.status = false;
+                        sts.message = "Can not find " + args.planet_name + " planet";
+                    } else {
+                        sts.status = true;
+                    }
+                } else {
+                    sts.status = false;
+                    sts.message = "Some field are incorect";
+                }
+
+                printPlanetDB();
+
+                callback({
                     status: sts.getObj()
                 });
             }
