@@ -1,0 +1,43 @@
+body {
+    background-color: #242a49;
+}
+
+label {
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.form-control {
+    background-color: #fefde9;
+    border-radius: 0;
+    border: 0;
+}
+
+a {
+    color: red;
+}
+
+.panel, .panel-heading {
+    border-radius: 0;
+    border: none;
+}
+
+.panel {
+    border: 2px solid #00bcd4;
+}
+
+.panel-primary > .panel-heading {
+    background-color: #00bcd4;
+}
+
+.panel-body {
+    background-color: #d9dbd7;
+}
+
+.btn-primary {
+    border-radius: 0;
+    padding: 6px 20px;
+    width: 100%;
+    background-color: #f6d268;
+    border: 2px solid #ffd455;
+}

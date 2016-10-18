@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles/bootstrap.min.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <script src="scripts/jquery.min.js"></script>
+  <script type="text/javascript" src="scripts/soap.jquery.js"></script>
+  <script src="scripts/bootstrap.min.js"></script>
+  <script type="text/javascript" src="scripts/main.js"></script>
+</head>
+<body>
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><span>Add New Planet</span></div>
+            <div class="panel-body">
+                <form>
+                  <div class="form-group">
+                    <label for="planetName">Planet name:</label>
+                    <input type="text" class="form-control" id="planetName">
+                  </div>
+                  <div class="form-group">
+                    <label for="planetRadius">Planet radius (km):</label>
+                    <input type="number" class="form-control" id="planetRadius">
+                  </div>
+                  <div class="form-group">
+                    <label for="opener">Opener</label>
+                    <input type="number" class="form-control" id="opener">
+                  </div>
+                  <button id="addPlanet" type="button" class="btn btn-primary">Submit</button>
+                  <div class="response"></div>
+                </form>  
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Remove Planet</div>
+            <div class="panel-body">
+                <form>
+                  <div class="form-group">
+                    <label for="removePlanetName">Planet name:</label>
+                    <input type="text" class="form-control" id="removePlanetName">
+                  </div>
+                  <button id="removePlanet" type="button" class="btn btn-primary">Submit</button>
+                  <div class="response"></div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Change Planet</div>
+            <div class="panel-body">
+                <form>
+                  <div class="form-group">
+                    <label for="changePlanetName">Planet name:</label>
+                    <input type="text" class="form-control" id="changePlanetName">
+                  </div>
+                  <div class="form-group">
+                    <label for="changePlanetRadius">Planet radius (km):</label>
+                    <input type="number" class="form-control" id="changePlanetRadius">
+                  </div>
+                  <div class="form-group">
+                    <label for="changePlanetOpener">Opener</label>
+                    <input type="number" class="form-control" id="changePlanetOpener">
+                  </div>
+                  <button id="changePlanet" type="button" class="btn btn-primary">Submit</button>
+                  <div class="response"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Add New Person</div>
+            <div class="panel-body">
+                <form>
+                  <div class="form-group">
+                    <label for="persontName">Person name:</label>
+                    <input type="text" class="form-control" id="persontName">
+                  </div>
+                  <div class="form-group">
+                    <label for="personSurmane">Person Surname:</label>
+                    <input type="text" class="form-control" id="personSurmane">
+                  </div>
+                  <button id="addPerson" type="button" class="btn btn-primary">Submit</button>
+                  <div class="response"></div>
+                </form>  
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Remove Person</div>
+            <div class="panel-body">
+                <form>
+                  <div class="form-group">
+                    <label for="removePersonName">Person name</label>
+                    <input type="text" class="form-control" id="removePersonName">
+                  </div>
+                  <div class="form-group">
+                    <label for="removePersonSurname">Person Surname</label>
+                    <input type="text" class="form-control" id="removePersonSurname">
+                  </div>
+                  <button id="removePerson" type="button" class="btn btn-primary">Submit</button>
+                  <div class="response"></div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Change Person</div>
+            <div class="panel-body">
+                <form>
+                  <div class="form-group">
+                    <label for="changePersonName">Person name:</label>
+                    <input type="text" class="form-control" id="changePersonName">
+                  </div>
+                  <div class="form-group">
+                    <label for="changePersonSurmane">Person Surname:</label>
+                    <input type="text" class="form-control" id="changePersonSurmane">
+                  </div>
+                  <button id="changePerson" type="button" class="btn btn-primary">Submit</button>
+                  <div class="response"></div>
+                </form>  
+            </div>
+        </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
