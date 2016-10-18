@@ -11,6 +11,7 @@ $(document).ready(function () {
     var removePerson = $('#removePerson');
     var changePlanet = $('#changePlanet');
     var changePerson = $('#changePerson');
+    var getPlanetList = $('#getPlanetList');
 
     function soap (args, button) {
         $.soap({
@@ -59,7 +60,7 @@ $(document).ready(function () {
     getPlanet.on('click', function () {
         var planet = $('#getPlanetName').val();
         var args = {
-            planet_name: planet;
+            planet_name: planet
         };
         soap(args, getPlanet);
     });
@@ -117,4 +118,8 @@ $(document).ready(function () {
         };
         soap(args, removePerson);
     });
+
+    getPlanetList.on('click', function () {
+        soap({}, getPlanetList);
+    })
 })
