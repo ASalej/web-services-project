@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:tns="http://localhost/wsdl?wsdl"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             name="PlanetSystemWSDL"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema xmlns:tns="http://schemas.xmlsoap.org/wsdl/"
+               xmlns="http://www.w3.org/2001/XMLSchema"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               elementFormDefault="qualified"
+               targetNamespace="http://localhost/wsdl?wsdl">
+      <!-- General types -->
+      <complexType name="Response">
+        <sequence>
+          <element minOccurs="1" maxOccurs="1" name="status" type="boolean"/>
+          <element minOccurs="0" maxOccurs="1" name="message" type="string"/>
+          <element minOccurs="0" maxOccurs="1" name="id" type="decimal"/>
+        </sequence>
+      </complexType>
+
+      <!-- OpenerPerson type -->
+      <complexType name="OpenerPerson">
+        <sequence>
+          <element name="opener_id" type="decimal" minOccurs="1" maxOccurs="1" />
+          <element name="name" type="string" minOccurs="1" maxOccurs="1" />
+          <element name="surname" type="string" minOccurs="1" maxOccurs="1" />
+        </sequence>
+      </complexType>
+      <complexType name="OpenerPersonList">
+        <sequence>
+          <element minOccurs="1" maxOccurs="unbounded" name="planets" type="Planet"/>
+        </sequence>
+      </complexType>
+
+      <!-- Planet type -->
+      <complexType name="Planet">
+        <sequence>
+          <element name="p_id" type="integer" minOccurs="1" maxOccurs="1" />
+          <element name="name" type="string" minOccurs="1" maxOccurs="1" />
+          <element name="radius" type="float" minOccurs="1" maxOccurs="1" />
+          <element name="opener_id" type="decimal" minOccurs="1" maxOccurs="1" />
+        </sequence>
+      </complexType>
+      <complexType name="PlanetList">
+        <sequence>
+          <element minOccurs="1" maxOccurs="unbounded" name="planets" type="Planet" />
+        </sequence>
+      </complexType>
+      <!-- Planet methods input and output -->
+      <element name="AddPlanetIn">
+        <element name="planet" type="Planet" />
+      </element>
+      <element name="AddPlanetOut">
+        <element name="status" type="Response" />
+      </element>
+      <element name="GetPlanetIn">
+        <element name="planet_name" type="string" />
+      </element>
+      <element name="GetPlanetOut">
+        <element name="status" type="Response" />
+      </element>
+    </xs:schema>
+  </types>
+
+  <!-- Сообщения процедуры addPlanet -->
+  <message name="addPlanetRequest">
+    <part name="Request" element="tns:AddPlanetIn" />
+  </message>
+  <message name="addPlanetResponse">
+    <part name="Response" element="tns:AddPlanetOut" />
+  </message>
+
+  <!-- Сообщения процедуры getPlanet -->
+  <message name="getPlanetRequest">
+    <part name="Request" element="tns:GetPlanetIn" />
+  </message>
+  <message name="getPlanetResponse">
+    <part name="Response" element="tns:GetPlanetOut" />
+  </message>
+
+
+  <!-- Привязка процедуры к сообщениям -->
+  <portType name="PlanetPortType">
+    <operation name="addPlanet">
+      <input message="tns:addPlanetRequest" />
+      <output message="tns:addPlanetResponse" />
+    </operation>
+    <operation name="getPlanet">
+      <input message="tns:getPlanetRequest" />
+      <output message="tns:getPlanetResponse" />
+    </operation>
+  </portType>
+
+
+  <!-- Формат процедур веб-сервиса -->
+  <binding name="PlanetBinding" type="tns:PlanetPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="addPlanet">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getPlanet">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+
+
+  <!-- Определение сервиса -->
+  <service name="PlanetSystemService">
+    <port name="PlanetPort" binding="tns:PlanetBinding">
+      <soap:address location="http://localhost:8001/wsdl" />
+    </port>
+  </service>
+</definitions>

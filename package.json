@@ -1,0 +1,19 @@
+{
+  "name": "SOAP",
+  "version": "1.0.0",
+  "description": "Lab: soap server",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "soap",
+    "express",
+    "wsdl"
+  ],
+  "author": "Alena Pazniak",
+  "license": "ISC",
+  "dependencies": {
+    "soap": "^0.17.0"
+  }
+}
