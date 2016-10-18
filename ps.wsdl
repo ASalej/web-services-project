@@ -66,6 +66,19 @@
         <element name="planet" type="Planet" minOccurs="0" maxOccurs="1"/>
         <element name="status" type="Response" minOccurs="1"/>
       </element>
+      <element name="ChangePlanetIn">
+        <element name="planet" type="Planet" minOccurs="1"/>
+      </element>
+      <element name="ChangePlanetOut">
+        <element name="planet" type="Planet" minOccurs="0" maxOccurs="1"/>
+        <element name="status" type="Response" minOccurs="1"/>
+      </element>
+      <element name="DelPlanetIn">
+        <element name="planet_name" type="string" minOccurs="1"/>
+      </element>
+      <element name="DelPlanetOut">
+        <element name="status" type="Response" minOccurs="1"/>
+      </element>
     </xs:schema>
   </types>
 
@@ -85,6 +98,22 @@
     <part name="Response" element="tns:GetPlanetOut" />
   </message>
 
+  <!-- Сообщения процедуры changePlanet -->
+  <message name="changePlanetRequest">
+    <part name="Request" element="tns:ChangePlanetIn" />
+  </message>
+  <message name="changePlanetResponse">
+    <part name="Response" element="tns:ChangePlanetOut" />
+  </message>
+
+  <!-- Сообщения процедуры delPlanet -->
+  <message name="delPlanetRequest">
+    <part name="Request" element="tns:DelPlanetIn" />
+  </message>
+  <message name="delPlanetResponse">
+    <part name="Response" element="tns:DelPlanetOut" />
+  </message>
+
 
   <!-- Привязка процедуры к сообщениям -->
   <portType name="PlanetPortType">
@@ -95,6 +124,14 @@
     <operation name="getPlanet">
       <input message="tns:getPlanetRequest" />
       <output message="tns:getPlanetResponse" />
+    </operation>
+    <operation name="changePlanet">
+      <input message="tns:changePlanetRequest" />
+      <output message="tns:changePlanetResponse" />
+    </operation>
+    <operation name="delPlanet">
+      <input message="tns:delPlanetRequest" />
+      <output message="tns:delPlanetResponse" />
     </operation>
   </portType>
 
@@ -112,6 +149,24 @@
       </output>
     </operation>
     <operation name="getPlanet">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="changePlanet">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="delPlanet">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
